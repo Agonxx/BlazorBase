@@ -1,0 +1,23 @@
+﻿@page "/counter"
+
+@using BlazorBase.Web.Service
+
+@inject IUsuarioService _usuarioService
+
+<PageTitle>Contagem</PageTitle>
+
+<h1>Contagem</h1>
+
+<p role="status">Usuários Adicionados: @QtdeUsuarios</p>
+
+<button class="btn btn-primary" @onclick="AddUsuario">Adicionar</button>
+
+@code {
+    private int QtdeUsuarios = 0;
+
+    private async Task AddUsuario()
+    {
+        var teste = await _usuarioService.AddUsuario();
+        QtdeUsuarios++;
+    }
+}
