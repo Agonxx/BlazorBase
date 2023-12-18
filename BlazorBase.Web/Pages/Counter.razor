@@ -13,11 +13,18 @@
 <button class="btn btn-primary" @onclick="AddUsuario">Adicionar</button>
 
 @code {
-    private int QtdeUsuarios = 0;
+    private int QtdeUsuarios { get; set; } = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var usuarios = await _usuarioService.BuscarUsuarios();
+        QtdeUsuarios = usuarios.Count();
+        await base.OnInitializedAsync();
+    }
 
     private async Task AddUsuario()
     {
-        var teste = await _usuarioService.AddUsuario();
-        QtdeUsuarios++;
+        var lastUser = await _usuarioService.AddUsuario();
+        QtdeUsuarios = lastUser.Id;
     }
 }

@@ -28,6 +28,7 @@ namespace BlazorBase.Api.Controllers
         public async Task<Usuario> AddUsuario()
         {
             var usuario = await _usuarioRepository.AddUsuario();
+            _logger.LogInformation("Usuário adicionado com sucesso");
             return usuario;
         }
 
