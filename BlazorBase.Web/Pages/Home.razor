@@ -1,7 +1,34 @@
 ﻿@page "/"
+@using BlazorBase.Shared.Models
+
+@inject Blazored.LocalStorage.ILocalStorageService _localStorage;
 
 <PageTitle>Home</PageTitle>
 
 <h1>Olá mundo!</h1>
 
-Welcome to your new app.
+<button class="btn btn-primary" @onclick="SetarLocalStorage">Setar</button>
+<button class="btn btn-primary" @onclick="BuscarLocalStorage">Buscar</button>
+
+@code {
+
+    public List<Usuario> ListUsuarios { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListUsuarios = await _localStorage.GetItemAsync<List<Usuario>>("ListaModulosSelecionados");
+    }
+
+    public async Task SetarLocalStorage()
+    {
+        await _localStorage.SetItemAsync("ListaUsuarios", ListUsuarios);
+        StateHasChanged();
+    }
+
+    public async Task BuscarLocalStorage()
+    {
+        var teste = await _localStorage.GetItemAsync<List<Usuario>>("ListaUsuarios");
+        StateHasChanged();
+    }
+
+}
